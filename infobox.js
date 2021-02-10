@@ -9,7 +9,7 @@ var closeList = "</li>"; // Declare a variable to contain a close list tag
 // Creat a loop to create 6 images starting with index 0
 for (var i=0; i<10; i++) {
     fileNames.push("photo" + (i+1)); //Create image file name and store in the array 
-    photos.push ("<img src='images/"+fileNames[i]+".jpeg'>"); // Assemble file name into image element and store in an array 
+    photos.push ('<a href="#/" class="lightbox-toggle">' + "<img src='images/"+fileNames[i]+".jpeg'>" + "</a>"); // Assemble file name into image element and store in an array 
     image = openList + photos[i] + closeList; // Assemble image element from array with list elements and store in a variable
     imageList.push(image); // Store (push) the assembled list codes into an array 
 }
@@ -43,20 +43,20 @@ var captionTexts =
 'pet9',
 'pet10'];
 
-var descTexts =['find a pet today!',
-'find the right pet!',
-'find a pet today!',
-'find the right pet!', 
-'find a pet today!',
-'find the right pet!',
-'find a pet today!',
-'find the right pet!',
-'find a pet today!',
-'find the right pet!'];
+var descTexts =['1find a pet today!',
+'2find the right pet!',
+'3find a pet today!',
+'4find the right pet!', 
+'5find a pet today!',
+'6find the right pet!',
+'7find a pet today!',
+'8find the right pet!',
+'9find a pet today!',
+'10find the right pet!'];
 
 for (var i=0; i<10; i++) {
 fileNames.push("photo" + (i+1));
-photos.push("<img src='images/"+fileNames[i]+".jpeg'>");
+photos.push('<a href="#/" class="lightbox-toggle">' + "<img src='images/"+fileNames[i]+".jpeg'>"+ "</a>");
 //openList ="<li id='photo" + (i+1)+"''>";
 image= openList + i + closeFunction + photos[i] + openCaptionTag + captionTexts[i] + closeCaptionTag + openDescTag + descTexts[i] + closeDescTag + closeList;
 imageList.push(image);
@@ -140,3 +140,35 @@ var CloseInfoBox ="</div>";
 //};
 
 //Four loop, and  */
+
+//lightbox
+
+$(document).ready(function(){
+
+  /* Open lightbox on button click */
+  $('.lightbox-toggle img').click(function(){
+      $('.backdrop').animate({'opacity':'.50'}, 300, 'linear').css('display', 'block');
+      $('.box').fadeIn();
+
+      //Check if lightbox has an image
+      if ($('.box').contents('img')) {
+          $('.box').contents().remove('img'); //If true, clear image
+      }
+      //Get text content in attribute
+      // var $altvalue = $(this).attr('alt'); //or var altvalue = $(this).attr('alt');
+
+      //if ($altvalue=="Angkor Wat") {
+          var img = $(this).clone(); //Duplicate DOM element
+          $('.box').append(img); //Insert duplicated element in another element
+      //}
+  });
+
+  /* Click to close lightbox */
+  $('.close, .backdrop').click(function(){
+      $('.backdrop').animate({'opacity':'0'}, 300, 'linear', function(){
+          $('.backdrop').css('display', 'none');
+      });
+      $('.box').fadeOut();
+  });
+
+});
